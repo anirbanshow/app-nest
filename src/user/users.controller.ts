@@ -4,8 +4,14 @@ import { UsersService } from "./users.service.js";
 @Controller('users')
 export class UsersController {
     constructor(private usersService: UsersService) { }
+
     @Get()
     getUsers() {
         return this.usersService.getUsers();
+    }
+
+    @Get('all')
+    findAll() {
+        return "All users";
     }
 }
