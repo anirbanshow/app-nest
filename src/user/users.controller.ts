@@ -1,4 +1,4 @@
-import { Controller, Get } from "@nestjs/common";
+import { Controller, Get, Param, Query } from "@nestjs/common";
 import { UsersService } from "./users.service.js";
 
 @Controller('users')
@@ -10,8 +10,16 @@ export class UsersController {
     constructor(private usersService: UsersService) { }
 
     @Get()
-    getUsers() {
-        return this.usersService.getUsers();
+    getUsers(
+        @Query('page') page: number,
+        @Query('limit') limit: number
+    ) {
+        return {
+            data: this.usersService.getUsers(page, limit),
+            total: this.usersService.getTotalUsers(),
+            page: page,
+            limit: limit,
+        }
     }
 
     @Get('all')
@@ -19,9 +27,9 @@ export class UsersController {
         return this.usersService.findAll();
     }
 
-    @Get('profile')
-    getProfile() {
-        return this.usersService.getProfile();
+    @Get('profile/:id')
+    getProfile(@Param('id') id: string) {
+        return this.usersService.getProfile(id);
     }
 
     @Get('total')

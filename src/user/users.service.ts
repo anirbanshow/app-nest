@@ -11,18 +11,25 @@ export class UsersService {
         { id: 2, name: 'Jane Doe' },
         { id: 3, name: 'John Smith' },
         { id: 4, name: 'Jane Smith' },
+        { id: 5, name: 'John Doe' },
+        { id: 6, name: 'Jane Doe' },
+        { id: 7, name: 'John Smith' },
+        { id: 8, name: 'Jane Smith' },
+        { id: 9, name: 'John Doe' },
+        { id: 10, name: 'Jane Doe' },
     ];
 
-    getUsers() {
-        return this.users;
+    getUsers(page: number, limit: number) {
+        const startIndex = (page - 1) * limit;
+        return this.users.slice(startIndex, limit);
     }
 
     findAll() {
         return this.users;
     }
 
-    getProfile() {
-        return this.users[0];
+    getProfile(id: string) {
+        return this.users.find(user => user.id === parseInt(id));
     }
 
     getTotalUsers() {
