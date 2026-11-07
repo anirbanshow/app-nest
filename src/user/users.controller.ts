@@ -1,4 +1,4 @@
-import { Controller, Get, Param, Query } from "@nestjs/common";
+import { Body, Controller, Get, Param, Post, Query } from "@nestjs/common";
 import { UsersService } from "./users.service.js";
 
 @Controller('users')
@@ -36,6 +36,14 @@ export class UsersController {
     getTotalUsers() {
         return {
             total: this.usersService.getTotalUsers(),
+        };
+    }
+
+    @Post('create')
+    createUser(@Body() body: any) {
+        return {
+            message: 'User created successfully',
+            data: body,
         };
     }
 }
