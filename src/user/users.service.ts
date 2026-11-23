@@ -6,7 +6,7 @@ import { Injectable } from "@nestjs/common";
 // and it will not be able to be used in other classes
 export class UsersService {
 
-    private users = [
+    private users: { id: number, name: string }[] = [
         { id: 1, name: 'John Doe' },
         { id: 2, name: 'Jane Doe' },
         { id: 3, name: 'John Smith' },
@@ -34,5 +34,15 @@ export class UsersService {
 
     getTotalUsers() {
         return this.users.length;
+    }
+
+    createUser(body: any) {
+        this.users.push(body);
+        return {
+            message: 'User created successfully',
+            data: {
+                body
+            },
+        };
     }
 }

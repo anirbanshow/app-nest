@@ -1,4 +1,5 @@
-import { Body, Controller, Get, Param, Post, Query } from "@nestjs/common";
+import { Body, Controller, Get, HttpCode, Param, Post, Query, Res } from "@nestjs/common";
+import type { Response } from "express";
 import { UsersService } from "./users.service.js";
 
 @Controller('users')
@@ -40,10 +41,20 @@ export class UsersController {
     }
 
     @Post('create')
+    @HttpCode(200)
     createUser(@Body() body: any) {
-        return {
-            message: 'User created successfully',
-            data: body,
-        };
+        return this.usersService.createUser(body);
+    }
+
+    @Get()
+    findOne(@Res() res: Response) {
+        return res.status(200).json({
+            message: 'User found successfully',
+            data: {
+                id: 1,
+                name: 'John Doe',
+                email: 'john.doe@example.com',
+            },
+        });
     }
 }
